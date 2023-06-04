@@ -22,6 +22,7 @@ const ContractPage = () => {
 
     fetchContractInfo();
     fetchContractStatus();
+
   }, [address, shipItemClicked]);
 
   const handleRefresh = async () => {

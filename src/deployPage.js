@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { deployContract } from './ethereum/deploy';
+import deploy from './ethereum/deploy';
 
 const DeployPage = () => {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [contractAddress, setContractAddress] = useState('');
 
   const handleDeploy = async (e) => {
     e.preventDefault();
-    const address = await deployContract(amount);
+    const address = await deploy(amount);
     setContractAddress(address);
-    history.push(`/contract/${contractAddress}`);
+    console.log("address",address)
+    navigate(`/contract/${address}`);
   };
 
   const handleNavigate = () => {
-    history.push(`/contract/${contractAddress}`);
+    console.log("address",contractAddress)
+    navigate(`/contract/${contractAddress}`);
   };
+
+  // 從 Local Storage 取回收據地址
+  const storedAddress = localStorage.getItem('receiptAddress');
 
   return (
     <div>
@@ -26,8 +31,15 @@ const DeployPage = () => {
           Amount:
           <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
         </label>
-        <button type="submit">Deploy Contract</button>
+        <button type="submit" disabled={amount === null || amount === ''}>Deploy Contract</button>
       </form>
+
+      {storedAddress && (
+        <div>
+          <p>Contract deployed at address: {storedAddress}</p>
+          <button onClick={() => navigate(`/contract/${storedAddress}`)}>Go to Contract Page</button>
+        </div>
+      )}
 
       {contractAddress && (
         <div>

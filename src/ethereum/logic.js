@@ -1,19 +1,25 @@
 const { web3 } = require("./web3");
 const compileContract = require("../contract/ptTrans.json");
 
-// 取得部署在網路上的智能合約物件 (ganache-cli 或測試網路或主網路)
-// 網路可以在 web3 檔案中選擇
-
 const getContractObject = () => {
-    const contractReceipt = require("./receipt-metamask.json");
-    // 建立智能合約物件/實例
+    // 從 Local Storage 中获取收据地址
+    const receiptAddress = localStorage.getItem('receiptAddress');
+  
+    // 如果没有收据地址，则返回 null 或者进行错误处理
+    if (!receiptAddress) {
+        console.error('Receipt address not found in local storage.');
+        return null;
+    }
+  
+    // 建立智能合约物件/实例
     const contractObject = new web3.eth.Contract(
         compileContract.abi,
-        contractReceipt.address
+        receiptAddress
     );
-
+  
     return contractObject;
 };
+
 
 const payee = async () => {
     const contractObject = getContractObject();
@@ -94,6 +100,18 @@ const prePay = async (value) => {
     return receipt;
   };
   
+  const getContractInfo = async () => {
+    const info = {
+      payee: await payee(),
+      payer: await payer(),
+      amount: await amount(),
+      deadline: await deadline(),
+      status: await checkContractStatus()
+    };
+    return info;
+  };
+
+
   module.exports = {
     payee,
     payer,
@@ -104,6 +122,7 @@ const prePay = async (value) => {
     terminateContract,
     prePay,
     shipItem,
-    confirmReceived
+    confirmReceived,
+    getContractInfo
   };
   
