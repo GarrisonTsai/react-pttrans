@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import deploy from './ethereum/deploy';
+import { deploy, updateAddress } from './ethereum/deploy';
 
 const DeployPage = () => {
   const navigate = useNavigate();
@@ -15,8 +15,9 @@ const DeployPage = () => {
     navigate(`/contract/${address}`);
   };
 
-  const handleNavigate = () => {
+  const handleNavigate = async () => {
     console.log("address",contractAddress)
+    await updateAddress(contractAddress);
     navigate(`/contract/${contractAddress}`);
   };
 
@@ -41,13 +42,6 @@ const DeployPage = () => {
         </div>
       )}
 
-      {contractAddress && (
-        <div>
-          <p>Contract deployed at address: {contractAddress}</p>
-          <button onClick={handleNavigate}>Go to Contract Page</button>
-        </div>
-      )}
-
       <form onSubmit={handleNavigate}>
         <label>
           Existing Contract Address:
@@ -55,6 +49,13 @@ const DeployPage = () => {
         </label>
         <button type="submit">Go to Contract Page</button>
       </form>
+
+      {contractAddress && (
+        <div>
+          <p>Search contract deployed at address: {contractAddress}</p>
+          <button onClick={handleNavigate}>Go to Contract Page</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -31,4 +31,16 @@ const deploy = async (mymessage) => {
   }
 };
 
-export default deploy;
+const updateAddress = async (address) => {
+  try {
+    localStorage.setItem('receiptAddress', address);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
+
+module.exports = {
+  deploy,
+  updateAddress
+};
