@@ -1,10 +1,10 @@
-import Web3 from 'web3';
-import compiledContract from '../contract/ptTrans.json';
+const { web3 } = require("./web3");
+const compiledContract = require("../contract/ptTrans.json");
 
 const deploy = async (mymessage) => {
   try {
     // 建立 Web3 連接
-    const web3 = new Web3(window.ethereum);
+    // const web3 = new Web3(window.ethereum);
     
     // 取得帳戶
     const accounts = await web3.eth.requestAccounts();
@@ -24,6 +24,7 @@ const deploy = async (mymessage) => {
 
     // 將收據地址儲存到瀏覽器的 Local Storage
     localStorage.setItem('receiptAddress', result.options.address);
+    return result.options.address;
 
   } catch (error) {
     console.error(error);

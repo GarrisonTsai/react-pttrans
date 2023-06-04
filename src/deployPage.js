@@ -6,6 +6,7 @@ const DeployPage = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [contractAddress, setContractAddress] = useState('');
+  const [oldAddress, setOldAddress] = useState('');
 
   const handleDeploy = async (e) => {
     e.preventDefault();
@@ -16,13 +17,13 @@ const DeployPage = () => {
   };
 
   const handleNavigate = async () => {
-    console.log("address",contractAddress)
-    await updateAddress(contractAddress);
-    navigate(`/contract/${contractAddress}`);
+    console.log("address",oldAddress)
+    await updateAddress(oldAddress);
+    navigate(`/contract/${oldAddress}`);
   };
 
   // 從 Local Storage 取回收據地址
-  const storedAddress = localStorage.getItem('receiptAddress');
+  // const storedAddress = localStorage.getItem('receiptAddress');
 
   return (
     <div>
@@ -35,25 +36,24 @@ const DeployPage = () => {
         <button type="submit" disabled={amount === null || amount === ''}>Deploy Contract</button>
       </form>
 
-      {storedAddress && (
+      {contractAddress && (
         <div>
-          <p>Contract deployed at address: {storedAddress}</p>
-          <button onClick={() => navigate(`/contract/${storedAddress}`)}>Go to Contract Page</button>
+          <p>Contract deployed at address: {contractAddress}</p>
+          <button onClick={() => navigate(`/contract/${contractAddress}`)}>Go to Contract Page</button>
         </div>
       )}
 
       <form onSubmit={handleNavigate}>
         <label>
           Existing Contract Address:
-          <input type="text" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} />
+          <input type="text" value={oldAddress} onChange={(e) => setOldAddress(e.target.value)} />
         </label>
-        <button type="submit">Go to Contract Page</button>
+        <button type="submit" disabled={oldAddress === null || oldAddress === ''}>Go to Contract Page</button>
       </form>
 
-      {contractAddress && (
+      {oldAddress && (
         <div>
-          <p>Search contract deployed at address: {contractAddress}</p>
-          <button onClick={handleNavigate}>Go to Contract Page</button>
+          <p>Search contract deployed at address: {oldAddress}</p>
         </div>
       )}
     </div>
