@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import deploy from './ethereum/deploy';
+import { deploy, updateAddress } from './ethereum/deploy';
 
 const DeployPage = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [contractAddress, setContractAddress] = useState('');
+  const [oldAddress, setOldAddress] = useState('');
 
   const handleDeploy = async (e) => {
     e.preventDefault();
     const address = await deploy(amount);
     setContractAddress(address);
     console.log("address",address)
-    navigate(`/contract/${address}`);
+    // navigate(`/contract/${address}`);
   };
 
-  const handleNavigate = () => {
-    console.log("address",contractAddress)
-    navigate(`/contract/${contractAddress}`);
+  const handleNavigate = async () => {
+    console.log("address",oldAddress)
+    await updateAddress(oldAddress);
+    navigate(`/contract/${oldAddress}`);
   };
 
   // 從 Local Storage 取回收據地址
-  const storedAddress = localStorage.getItem('receiptAddress');
+  // const storedAddress = localStorage.getItem('receiptAddress');
 
   return (
     <div>
@@ -34,27 +36,26 @@ const DeployPage = () => {
         <button type="submit" disabled={amount === null || amount === ''}>Deploy Contract</button>
       </form>
 
-      {storedAddress && (
-        <div>
-          <p>Contract deployed at address: {storedAddress}</p>
-          <button onClick={() => navigate(`/contract/${storedAddress}`)}>Go to Contract Page</button>
-        </div>
-      )}
-
       {contractAddress && (
         <div>
           <p>Contract deployed at address: {contractAddress}</p>
-          <button onClick={handleNavigate}>Go to Contract Page</button>
+          <button onClick={() => navigate(`/contract/${contractAddress}`)}>Go to Contract Page</button>
         </div>
       )}
 
       <form onSubmit={handleNavigate}>
         <label>
           Existing Contract Address:
-          <input type="text" value={contractAddress} onChange={(e) => setContractAddress(e.target.value)} />
+          <input type="text" value={oldAddress} onChange={(e) => setOldAddress(e.target.value)} />
         </label>
-        <button type="submit">Go to Contract Page</button>
+        <button type="submit" disabled={oldAddress === null || oldAddress === ''}>Go to Contract Page</button>
       </form>
+
+      {oldAddress && (
+        <div>
+          <p>Search contract deployed at address: {oldAddress}</p>
+        </div>
+      )}
     </div>
   );
 };
