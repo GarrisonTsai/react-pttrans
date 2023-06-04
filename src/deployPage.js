@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deploy, updateAddress } from './ethereum/deploy';
+import axios from 'axios';
+
+const { web3 } = require("./ethereum/web3");
 
 const DeployPage = () => {
   const navigate = useNavigate();
@@ -10,10 +13,31 @@ const DeployPage = () => {
 
   const handleDeploy = async (e) => {
     e.preventDefault();
+
     const address = await deploy(amount);
+    const accounts = await web3.eth.getAccounts();
     setContractAddress(address);
     console.log("address",address)
     // navigate(`/contract/${address}`);
+
+    if (contractAddress) {
+      const data = {
+        deployerAddress: accounts[0],
+        amount: amount,
+        contractAddress: contractAddress,
+        url: `http://localhost:3000/contract/${contractAddress}`
+      };
+    
+    try {
+        await axios.post('http://220.134.59.172:3000/orders', data);
+        console.log('訂單資料已成功傳送到後端');
+        // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
+      } catch (error) {
+        console.error('無法傳送訂單資料到後端：', error);
+        // 在這裡可以添加一些處理錯誤的邏輯或響應給用戶的訊息
+      }
+    }
+
   };
 
   const handleNavigate = async () => {
