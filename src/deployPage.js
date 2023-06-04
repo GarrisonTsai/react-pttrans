@@ -13,7 +13,7 @@ const DeployPage = () => {
     const address = await deploy(amount);
     setContractAddress(address);
     console.log("address",address)
-    navigate(`/contract/${address}`);
+    // navigate(`/contract/${address}`);
   };
 
   const handleNavigate = async () => {
