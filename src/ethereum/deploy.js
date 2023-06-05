@@ -7,7 +7,7 @@ const deploy = async (mymessage) => {
     // const web3 = new Web3(window.ethereum);
     
     // 取得帳戶
-    const accounts = await web3.eth.requestAccounts();
+    const accounts = await web3.eth.getAccounts();
     console.log(`嘗試使用帳戶進行部署，帳戶：${accounts[0]}`);
     
     /**
@@ -18,7 +18,7 @@ const deploy = async (mymessage) => {
     const result = await new web3.eth.Contract(
       compiledContract.abi
     )
-      .deploy({ data: "0x" + compiledContract.data.bytecode.object, arguments: [mymessage] })
+      .deploy({ data: "0x" + compiledContract.data.bytecode.object})
       .send({ gas: 3000000, from: accounts[0] });
     console.log(`合約已部署至地址：${result.options.address}`);
 

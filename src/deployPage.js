@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-// import { deploy, updateAddress } from './ethereum/deploy';
-import deploy from './ethereum/deploy';
+import { deploy } from './ethereum/deploy';
 import axios from 'axios';
 
 // const { web3 } = require("./ethereum/web3");
@@ -22,7 +21,7 @@ const DeployPage = () => {
   const handleDeploy = async (e) => {
     e.preventDefault(); 
 
-    const address = await deploy(totalPrice);
+    const address = await deploy("totalPrice");
     // const accounts = await web3.eth.getAccounts();
     setContractAddress(address);
     console.log("address",address)
@@ -36,7 +35,6 @@ const DeployPage = () => {
         serverID: serverID
       }
     try {
-        console.log('Sending fake data:', data);
         const msg = await axios.post('http://localhost:5193/OrderQuery/OrderSave', data);
         console.log(msg);
         // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
@@ -63,11 +61,11 @@ const DeployPage = () => {
       
       
       <form onSubmit={handleDeploy}>
-        <label>
+        {/* <label>
           Amount:
           <input type="number" step="0.01" value={amount} onChange={(e) => setAmount(e.target.value)} />
-        </label>
-        <button type="submit" disabled={amount === null || amount === ''}>Deploy Contract</button>
+        </label> */}
+        <button type="submit">Deploy Contract</button>
       </form>
 
       {contractAddress && (
