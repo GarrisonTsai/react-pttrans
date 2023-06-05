@@ -3,10 +3,8 @@ import { useSearchParams } from 'react-router-dom';
 import { deploy } from './ethereum/deploy';
 import axios from 'axios';
 
-const { web3 } = require("./ethereum/web3");
-
 const DeployPage = () => {
-  const [setContractAddress] = useState('');
+  // const [setContractAddress] = useState('');
 
   const [getParams] = useSearchParams()
   const buyerID = getParams.getAll('buyerID')
@@ -17,8 +15,9 @@ const DeployPage = () => {
 
   const handleDeploy = async (e) => {
     e.preventDefault(); 
-    const address = await deploy(totalPrice);
-    setContractAddress(address);
+
+    const address = await deploy("totalPrice");
+    // setContractAddress(address);
 
     if (address) {
       const data = {
