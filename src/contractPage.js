@@ -12,7 +12,7 @@ const ContractPage = () => {
   const contractAddress = getParams.getAll('contractAddress');
   const state = getParams.getAll('state');
   // const totalPrice = getParams.getAll('totalPrice');
-  // localStorage.setItem('receiptAddress', totalPrice);
+  localStorage.setItem('receiptAddress', contractAddress);
 
 
   // useEffect(() => {

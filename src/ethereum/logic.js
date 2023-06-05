@@ -21,17 +21,17 @@ const getContractObject = () => {
 };
 
 
-const payee = async () => {
-    const contractObject = getContractObject();
-    const result = await contractObject.methods.payee().call();
-    return result;
-};
+// const payee = async () => {
+//     const contractObject = getContractObject();
+//     const result = await contractObject.methods.payee().call();
+//     return result;
+// };
 
-const payer = async () => {
-    const contractObject = getContractObject();
-    const result = await contractObject.methods.payer().call();
-    return result;
-};
+// const payer = async () => {
+//     const contractObject = getContractObject();
+//     const result = await contractObject.methods.payer().call();
+//     return result;
+// };
 
 // const deadline = async () => {
 //     const contractObject = getContractObject();
