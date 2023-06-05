@@ -125,8 +125,8 @@ const GetState = async () => {
 
 
   module.exports = {
-    payee,
-    payer,
+    // payee,
+    // payer,
     // amount,
     // deadline,
     checkContractStatus,
