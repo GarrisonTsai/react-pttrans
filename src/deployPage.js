@@ -22,11 +22,11 @@ const DeployPage = () => {
 
     if (address) {
       const data = {
-        buyerID: buyerID,
-        buyerAddress: buyerAddress,
+        buyerID: buyerID[0],
+        buyerAddress: buyerAddress[0],
         smartContractAddress: address,
-        storeID: storeID,
-        serverID: serverID
+        storeID: storeID[0],
+        serverID: serverID[0]
       }
       try {
           const msg = await axios.post('http://220.134.59.172:5193/OrderQuery/OrderSave', data, {
