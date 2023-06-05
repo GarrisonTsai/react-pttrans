@@ -4,16 +4,16 @@ pragma solidity ^0.8.0;
 contract ptTrans {
     address payable public payer; // 付款人
     address payable public payee; // 收款人
-    uint256 public amount; // 轉帳金額
+    // uint256 public amount; // 轉帳金額
     bool private isPrepaid; //付款人已經預付
     bool private itemShipped; // 商品是否已出貨
     bool private itemReceived; // 商品是否已收到
     uint256 public deadline; // 合約終止期限
 
-    constructor(uint256 _amount) {
+    constructor() {
         payer = payable(address(0)); // 0x000000000
         payee = payable(msg.sender); // 由收款人創建合約
-        amount = _amount;
+        // amount = _amount;
         isPrepaid = false;
         itemShipped = false;
         itemReceived = false;
@@ -26,7 +26,7 @@ contract ptTrans {
         // require(msg.sender != payee, "Payee cannot pre-pay");
 
         payer = payable(msg.sender);
-        require(msg.value >= amount, "Insufficient payment");
+        // require(msg.value >= amount, "Insufficient payment");
 
         // 設定預付成功
         isPrepaid = true;
@@ -51,6 +51,23 @@ contract ptTrans {
 
     function checkContractStatus() external view returns (bool, bool, bool) {
         return (isPrepaid, itemShipped, itemReceived);
+    }
+
+    function GetState() external view returns (string memory) {
+        string memory state = "";
+        if (itemReceived) {
+            state = "Item has been recieved.";
+        }
+        else if (itemShipped) {
+            state = "Item has been shipped.";
+        }
+        else if (isPrepaid) {
+            state = "Already prepaid.";
+        }
+        else {
+            state = "Item hasn't been prepaid yet.";
+        }
+        return state;
     }
 
     function terminateContract() external {

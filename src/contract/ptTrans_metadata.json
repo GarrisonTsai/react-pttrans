@@ -6,24 +6,18 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "_amount",
-						"type": "uint256"
-					}
-				],
+				"inputs": [],
 				"stateMutability": "nonpayable",
 				"type": "constructor"
 			},
 			{
 				"inputs": [],
-				"name": "amount",
+				"name": "GetState",
 				"outputs": [
 					{
-						"internalType": "uint256",
+						"internalType": "string",
 						"name": "",
-						"type": "uint256"
+						"type": "string"
 					}
 				],
 				"stateMutability": "view",
@@ -155,11 +149,11 @@
 	},
 	"sources": {
 		"ptTrans/ptTrans.sol": {
-			"keccak256": "0x75a644aa2bd8b5644f663d5bee359c197243f60ae4c3e6e1f54d81c2d19f50e9",
+			"keccak256": "0x2772003cb7a10edee7ddab8c781883d1200a83d4908fa6bdfa842ce3bc2af9e7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://6cbd25717c7da0f4d21b01762fb718891dfa3400a8692c31f4a76dffdf787190",
-				"dweb:/ipfs/QmWQUUgCsTdJp42dAWUAZpVRrSmgQwDJwcapdkGRwabEKf"
+				"bzz-raw://26622c647d9cec31c3f860dc63f0f53749538bd085ab231e988b28b9da6b1b08",
+				"dweb:/ipfs/QmRd46yPRUHbbe3qYhxGj5UKiVZRfxCR8iKr25SQKyxZwd"
 			]
 		}
 	},
