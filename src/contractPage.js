@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getContractInfo, checkContractStatus, prePay, shipItem, confirmReceived } from './ethereum/logic';
+import axios from 'axios';
 
 const ContractPage = () => {
   const { address } = useParams();
@@ -35,17 +36,75 @@ const ContractPage = () => {
     if (prePayValue) {
       await prePay(prePayValue);
       setPrePayValue('');
+      
+      const data = {
+        contractAddress: address,
+        amount: contractInfo.amount,
+        payer: contractInfo.payer,
+        payee: contractInfo.payee,
+        deadline: contractInfo.deadline,
+        amountPaid: status[0],
+        productShipped: status[1],
+        productReceived: status[2]
+      };
+
+      try {
+        await axios.post('http://220.134.59.172:3000/orders', data);
+        console.log('資料已成功傳送到後端');
+        // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
+      } catch (error) {
+        console.error('無法傳送資料到後端：', error);
+        // 在這裡可以添加一些處理錯誤的邏輯或響應給用戶的訊息
+      }
     }
   };
 
   const handleShipItem = async () => {
     await shipItem();
     setShipItemClicked(true);
+
+    // 將資料傳送回資料庫
+    const data = {
+      contractAddress: address,
+      payer: contractInfo.payer,
+      payee: contractInfo.payee,
+      deadline: contractInfo.deadline,
+      productShipped: status[1],
+    };
+
+    try {
+      await axios.post('http://220.134.59.172:3000/orders', data);
+      console.log('資料已成功傳送到後端');
+      // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
+    } catch (error) {
+      console.error('無法傳送資料到後端：', error);
+      // 在這裡可以添加一些處理錯誤的邏輯或響應給用戶的訊息
+    }
+
   };
 
   const handleConfirmReceived = async () => {
     await confirmReceived();
     setShipItemClicked(true);
+
+    // 將資料傳送回資料庫
+    const updateShipItem = {
+      contractAddress: address,
+      payer: contractInfo.payer,
+      payee: contractInfo.payee,
+      deadline: contractInfo.deadline,
+      productReceived: status[2]
+    };
+
+    try {
+      await axios.post('http://220.134.59.172:3000/orders', updateShipItem);
+      console.log('資料已成功傳送到後端');
+      // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
+    } catch (error) {
+      console.error('無法傳送資料到後端：', error);
+      // 在這裡可以添加一些處理錯誤的邏輯或響應給用戶的訊息
+    }
+
   };
 
   if (!contractInfo) {
