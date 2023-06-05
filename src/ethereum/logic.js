@@ -33,17 +33,11 @@ const payer = async () => {
     return result;
 };
 
-// const amount = async () => {
+// const deadline = async () => {
 //     const contractObject = getContractObject();
-//     const result = await contractObject.methods.amount().call();
+//     const result = await contractObject.methods.deadline().call();
 //     return result;
 // };
-
-const deadline = async () => {
-    const contractObject = getContractObject();
-    const result = await contractObject.methods.deadline().call();
-    return result;
-};
 
 const checkContractStatus = async () => {
     const contractObject = getContractObject();
@@ -51,38 +45,49 @@ const checkContractStatus = async () => {
     return result;
 };
 
-const finishContract = async () => {
-    const accounts = await web3.eth.getAccounts();
-    const contractObject = getContractObject();
-    const receipt = await contractObject.methods.finishContract().send({ from: accounts[0], gas: 1000000 });
-    console.info(receipt);
-    console.info("Contract successfully finished!");
-    return receipt;
+const GetState = async () => {
+  const contractObject = getContractObject();
+  const result = await contractObject.methods.GetState().call();
+  return result;
 };
 
-const terminateContract = async () => {
-    const accounts = await web3.eth.getAccounts();
-    const contractObject = getContractObject();
-    const receipt = await contractObject.methods.terminateContract().send({ from: accounts[0], gas: 1000000 });
-    console.info(receipt);
-    console.info("Contract successfully terminated!");
-    return receipt;
-};
+// const finishContract = async () => {
+//     const accounts = await web3.eth.getAccounts();
+//     const contractObject = getContractObject();
+//     const receipt = await contractObject.methods.finishContract().send({ from: accounts[0], gas: 1000000 });
+//     console.info(receipt);
+//     console.info("Contract successfully finished!");
+//     return receipt;
+// };
 
-const prePay = async (value) => {
-    const accounts = await web3.eth.getAccounts();
-    const contractObject = getContractObject();
-    const receipt = await contractObject.methods.prePay().send({
-      from: accounts[0],
-      value: web3.utils.toWei(value, 'ether'),
-      gas: 1000000
-    });
-    console.info(receipt);
-    console.info("Pre-payment successful!");
-    return receipt;
-  };
+// const terminateContract = async () => {
+//     const accounts = await web3.eth.getAccounts();
+//     const contractObject = getContractObject();
+//     const receipt = await contractObject.methods.terminateContract().send({ from: accounts[0], gas: 1000000 });
+//     console.info(receipt);
+//     console.info("Contract successfully terminated!");
+//     return receipt;
+// };
+
+// const prePay = async (value) => {
+//     const accounts = await web3.eth.getAccounts();
+//     const contractObject = getContractObject();
+//     const receipt = await contractObject.methods.prePay().send({
+//       from: accounts[0],
+//       value: web3.utils.toWei(value, 'ether'),
+//       gas: 1000000
+//     });
+//     console.info(receipt);
+//     console.info("Pre-payment successful!");
+//     return receipt;
+//   };
   
   const shipItem = async () => {
+    const status = checkContractStatus();
+    if (status[0]===true){
+      const result = GetState();
+      return result;
+    }
     const accounts = await web3.eth.getAccounts();
     const contractObject = getContractObject();
     const receipt = await contractObject.methods.shipItem().send({ from: accounts[0], gas: 1000000 });
@@ -92,6 +97,13 @@ const prePay = async (value) => {
   };
   
   const confirmReceived = async () => {
+    const status = checkContractStatus();
+    if (status[1]===true){
+      const result = GetState();
+      return result;
+    } else if (status[1]===false) {
+      return "Item has no shipped yet!"
+    }
     const accounts = await web3.eth.getAccounts();
     const contractObject = getContractObject();
     const receipt = await contractObject.methods.confirmReceived().send({ from: accounts[0], gas: 1000000 });
@@ -100,29 +112,29 @@ const prePay = async (value) => {
     return receipt;
   };
   
-  const getContractInfo = async () => {
-    const info = {
-      payee: await payee(),
-      payer: await payer(),
-      amount: await amount(),
-      deadline: await deadline(),
-      status: await checkContractStatus()
-    };
-    return info;
-  };
+  // const getContractInfo = async () => {
+  //   const info = {
+  //     payee: await payee(),
+  //     payer: await payer(),
+  //     amount: await amount(),
+  //     deadline: await deadline(),
+  //     status: await checkContractStatus()
+  //   };
+  //   return info;
+  // };
 
 
   module.exports = {
     payee,
     payer,
-    amount,
-    deadline,
+    // amount,
+    // deadline,
     checkContractStatus,
-    finishContract,
-    terminateContract,
-    prePay,
+    // finishContract,
+    // terminateContract,
+    // prePay,
     shipItem,
     confirmReceived,
-    getContractInfo
+    // getContractInfo
   };
   

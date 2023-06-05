@@ -6,7 +6,7 @@ import axios from 'axios';
 const ContractPage = () => {
   // const { address } = useParams();
   // const [contractInfo, setContractInfo] = useState(null);
-  // const [status, setStatus] = useState([]);
+  const [msg, setMsg] = useState('');
   // const [prePayValue, setPrePayValue] = useState('');
   // const [shipItemClicked, setShipItemClicked] = useState(false);
   const [getParams] = useSearchParams();
@@ -37,25 +37,24 @@ const ContractPage = () => {
   //   setStatus(contractStatus);
   // };
 
-  const handlePrePay = async (e) => {
-    e.preventDefault();
-    if (totalPrice) {
-      await prePay(totalPrice);
-      // setPrePayValue('');
+  // const handlePrePay = async (e) => {
+  //   e.preventDefault();
+  //   if (totalPrice) {
+  //     await prePay(totalPrice);
+  //     // setPrePayValue('');
       
-    }
-  };
+  //   }
+  // };
 
   const handleShipItem = async () => {
-    await shipItem();
-    // setShipItemClicked(true);
+    const result = await shipItem();
+    setMsg(result);
 
   };
 
   const handleConfirmReceived = async () => {
-    await confirmReceived();
-    // setShipItemClicked(true);
-
+    const result = await confirmReceived();
+    setMsg(result);
   };
 
   // if (!contractInfo) {
@@ -78,14 +77,14 @@ const ContractPage = () => {
       </ul>
       <button onClick={handleRefresh}>Refresh</button> */}
 
-      {state === 0 && (
+      {/* {state === 0 && (
         <form onSubmit={handlePrePay}>
           <label>
             Pre-Pay Amount: {totalPrice}
           </label>
           <button type="submit">Pre-Pay</button>
         </form>
-      )}
+      )} */}
 
       {state === 1 && (
         <button onClick={handleShipItem}>Ship Item</button>
@@ -93,6 +92,10 @@ const ContractPage = () => {
 
       {state === 2 && (
         <button onClick={handleConfirmReceived}>Confirm Received</button>
+      )}
+
+      {msg && (
+        <p>{msg}</p>
       )}
     </div>
   );

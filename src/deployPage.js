@@ -16,7 +16,7 @@ const DeployPage = () => {
   const handleDeploy = async (e) => {
     e.preventDefault(); 
 
-    const address = await deploy("totalPrice");
+    const address = await deploy(buyerAddress, totalPrice);
     // setContractAddress(address);
 
     if (address) {

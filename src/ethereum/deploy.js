@@ -1,7 +1,7 @@
 const { web3 } = require("./web3");
 const compiledContract = require("../contract/ptTrans.json");
 
-const deploy = async () => {
+const deploy = async (buyerAddress, totalPrice) => {
   try {
     // 建立 Web3 連接
     // const web3 = new Web3(window.ethereum);
@@ -18,8 +18,8 @@ const deploy = async () => {
     const result = await new web3.eth.Contract(
       compiledContract.abi
     )
-      .deploy({ data: "0x" + compiledContract.data.bytecode.object})
-      .send({ gas: 3000000, from: accounts[0] });
+      .deploy({ data: "0x" + compiledContract.data.bytecode.object, arguments: [buyerAddress]})
+      .send({ value: totalPrice, gas: 3000000, from: accounts[0] });
     console.log(`合約已部署至地址：${result.options.address}`);
 
     // 將收據地址儲存到瀏覽器的 Local Storage

@@ -6,8 +6,14 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
-				"stateMutability": "nonpayable",
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "_payee",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
 				"type": "constructor"
 			},
 			{
@@ -27,11 +33,6 @@
 				"inputs": [],
 				"name": "checkContractStatus",
 				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					},
 					{
 						"internalType": "bool",
 						"name": "",
@@ -68,13 +69,6 @@
 			},
 			{
 				"inputs": [],
-				"name": "finishContract",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [],
 				"name": "payee",
 				"outputs": [
 					{
@@ -97,13 +91,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "prePay",
-				"outputs": [],
-				"stateMutability": "payable",
 				"type": "function"
 			},
 			{
@@ -149,11 +136,11 @@
 	},
 	"sources": {
 		"ptTrans/ptTrans.sol": {
-			"keccak256": "0x2772003cb7a10edee7ddab8c781883d1200a83d4908fa6bdfa842ce3bc2af9e7",
+			"keccak256": "0x8bf0af2f520cb574d9d703f73044e15c00a01643c67eff1102951aed917d0676",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://26622c647d9cec31c3f860dc63f0f53749538bd085ab231e988b28b9da6b1b08",
-				"dweb:/ipfs/QmRd46yPRUHbbe3qYhxGj5UKiVZRfxCR8iKr25SQKyxZwd"
+				"bzz-raw://aaff481e5d6cabea1cb29d4f97f8b3c63149e21756df7eefe1983a0f6dd56a92",
+				"dweb:/ipfs/QmbBJtR3kZiqYYqXFdeeceXeqPNEd86H7b7tMSJDJwkqFz"
 			]
 		}
 	},
