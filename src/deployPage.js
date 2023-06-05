@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { deploy } from './ethereum/deploy';
+import { web3 } from './ethereum/web3';
 import axios from 'axios';
 
 const DeployPage = () => {
   // const [setContractAddress] = useState('');
-
   const [getParams] = useSearchParams();
   const buyerID = getParams.getAll('buyerID');
   const buyerAddress = getParams.getAll('buyerAddress');
+  const sellerWalletAddress = getParams.getAll('sellerWalletAddress');
   const storeID = getParams.getAll('storeID');
   const serverID = getParams.getAll('serverID');
   const totalPrice = getParams.getAll('totalPrice');
@@ -16,7 +17,7 @@ const DeployPage = () => {
   const handleDeploy = async (e) => {
     e.preventDefault(); 
 
-    const address = await deploy(buyerAddress, totalPrice);
+    const address = await deploy(sellerWalletAddress, totalPrice);
     // setContractAddress(address);
 
     if (address) {
@@ -48,6 +49,8 @@ const DeployPage = () => {
         </label>
         <p><button type="submit">Deploy Contract</button></p>
       </form>
+
+      <p>seller address: {totalPrice}</p>
 
       {/* {contractAddress && (
         <div>
