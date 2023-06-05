@@ -9,7 +9,7 @@ const DeployPage = () => {
   const navigate = useNavigate();
   const [amount, setAmount] = useState('');
   const [contractAddress, setContractAddress] = useState('');
-  const [oldAddress, setOldAddress] = useState('');
+  // const [oldAddress, setOldAddress] = useState('');
 
   const handleDeploy = async (e) => {
     e.preventDefault();
@@ -22,15 +22,15 @@ const DeployPage = () => {
 
     if (contractAddress) {
       const data = {
-        deployerAddress: accounts[0],
-        amount: amount,
-        contractAddress: contractAddress,
-        url: `http://localhost:3000/contract/${contractAddress}`
-      };
-    
+        buyerID: buyerID,
+        buyerAddress: buyerAddress,
+        smartContractAddress: smartContractAddress,
+        storeID: storeID,
+        serverID: serverID
+      }
     try {
-        await axios.post('http://220.134.59.172:3000/orders', data);
-        console.log('訂單資料已成功傳送到後端');
+        const msg = await axios.post('http://localhost:5193/OrderQuery/OrderSave', data);
+        console.log(msg);
         // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
       } catch (error) {
         console.error('無法傳送訂單資料到後端：', error);
@@ -40,11 +40,11 @@ const DeployPage = () => {
 
   };
 
-  const handleNavigate = async () => {
-    console.log("address",oldAddress)
-    await updateAddress(oldAddress);
-    navigate(`/contract/${oldAddress}`);
-  };
+  // const handleNavigate = async () => {
+  //   console.log("address",oldAddress)
+  //   await updateAddress(oldAddress);
+  //   navigate(`/contract/${oldAddress}`);
+  // };
 
   // 從 Local Storage 取回收據地址
   // const storedAddress = localStorage.getItem('receiptAddress');
@@ -67,7 +67,7 @@ const DeployPage = () => {
         </div>
       )}
 
-      <form onSubmit={handleNavigate}>
+      {/* <form onSubmit={handleNavigate}>
         <label>
           Existing Contract Address:
           <input type="text" value={oldAddress} onChange={(e) => setOldAddress(e.target.value)} />
@@ -79,7 +79,7 @@ const DeployPage = () => {
         <div>
           <p>Search contract deployed at address: {oldAddress}</p>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
