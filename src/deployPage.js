@@ -29,7 +29,11 @@ const DeployPage = () => {
         serverID: serverID
       }
       try {
-          const msg = await axios.post('http://220.134.59.172:5193/OrderQuery/OrderSave', data);
+          const msg = await axios.post('http://220.134.59.172:5193/OrderQuery/OrderSave', data, {
+            headers: {
+              "Access-Control-Allow-Origin": "*"
+            }
+          });
           console.log(msg);
           // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
       } catch (error) {
