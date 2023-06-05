@@ -29,7 +29,7 @@ const DeployPage = () => {
         serverID: serverID[0]
       }
       try {
-          const msg = await axios.post('http://220.134.59.172:5193/OrderQuery/OrderSave', data, {
+          const msg = await axios.post('https://220.134.59.172:7226/OrderQuery/OrderSave', data, {
             headers: {
               "Access-Control-Allow-Origin": "*"
             }
