@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { deploy, updateAddress } from './ethereum/deploy';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+// import { deploy, updateAddress } from './ethereum/deploy';
+import deploy from './ethereum/deploy';
 import axios from 'axios';
 
-const { web3 } = require("./ethereum/web3");
+// const { web3 } = require("./ethereum/web3");
 
 const DeployPage = () => {
   const navigate = useNavigate();
@@ -11,24 +12,31 @@ const DeployPage = () => {
   const [contractAddress, setContractAddress] = useState('');
   // const [oldAddress, setOldAddress] = useState('');
 
-  const handleDeploy = async (e) => {
-    e.preventDefault();
+  const [getParams] = useSearchParams()
+  const buyerID = getParams.getAll('buyerID')
+  const buyerAddress = getParams.getAll('buyerAddress')
+  const storeID = getParams.getAll('storeID')
+  const serverID = getParams.getAll('serverID')
+  const totalPrice = getParams.getAll('totalPrice')
 
-    const address = await deploy(amount);
-    const accounts = await web3.eth.getAccounts();
+  const handleDeploy = async (e) => {
+    e.preventDefault(); 
+
+    const address = await deploy(totalPrice);
+    // const accounts = await web3.eth.getAccounts();
     setContractAddress(address);
     console.log("address",address)
-    // navigate(`/contract/${address}`);
 
     if (contractAddress) {
       const data = {
         buyerID: buyerID,
         buyerAddress: buyerAddress,
-        smartContractAddress: smartContractAddress,
+        smartContractAddress: address,
         storeID: storeID,
         serverID: serverID
       }
     try {
+        console.log('Sending fake data:', data);
         const msg = await axios.post('http://localhost:5193/OrderQuery/OrderSave', data);
         console.log(msg);
         // 在這裡可以添加一些處理成功傳送的邏輯或響應給用戶的訊息
@@ -52,6 +60,8 @@ const DeployPage = () => {
   return (
     <div>
       <h1>Deploy Page</h1>
+      
+      
       <form onSubmit={handleDeploy}>
         <label>
           Amount:
@@ -66,6 +76,8 @@ const DeployPage = () => {
           <button onClick={() => navigate(`/contract/${contractAddress}`)}>Go to Contract Page</button>
         </div>
       )}
+
+      <p>{buyerID}, {buyerAddress}, {storeID}, {serverID}</p>
 
       {/* <form onSubmit={handleNavigate}>
         <label>
