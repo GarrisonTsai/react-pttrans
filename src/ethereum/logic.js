@@ -33,11 +33,11 @@ const payer = async () => {
     return result;
 };
 
-const amount = async () => {
-    const contractObject = getContractObject();
-    const result = await contractObject.methods.amount().call();
-    return result;
-};
+// const amount = async () => {
+//     const contractObject = getContractObject();
+//     const result = await contractObject.methods.amount().call();
+//     return result;
+// };
 
 const deadline = async () => {
     const contractObject = getContractObject();

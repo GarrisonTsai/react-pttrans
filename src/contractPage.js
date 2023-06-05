@@ -5,13 +5,16 @@ import axios from 'axios';
 
 const ContractPage = () => {
   // const { address } = useParams();
-  const [contractInfo, setContractInfo] = useState(null);
-  const [status, setStatus] = useState([]);
-  const [prePayValue, setPrePayValue] = useState('');
-  const [shipItemClicked, setShipItemClicked] = useState(false);
+  // const [contractInfo, setContractInfo] = useState(null);
+  // const [status, setStatus] = useState([]);
+  // const [prePayValue, setPrePayValue] = useState('');
+  // const [shipItemClicked, setShipItemClicked] = useState(false);
   const [getParams] = useSearchParams();
-  const contractAddress = getParams.getAll('contractAddress')
-  const state = getParams.getAll('state')
+  const contractAddress = getParams.getAll('contractAddress');
+  const state = getParams.getAll('state');
+  const totalPrice = getParams.getAll('totalPrice');
+  localStorage.setItem('receiptAddress', totalPrice);
+
 
   // useEffect(() => {
   //   const fetchContractInfo = async () => {
@@ -36,22 +39,22 @@ const ContractPage = () => {
 
   const handlePrePay = async (e) => {
     e.preventDefault();
-    if (prePayValue) {
-      await prePay(prePayValue);
-      setPrePayValue('');
+    if (totalPrice) {
+      await prePay(totalPrice);
+      // setPrePayValue('');
       
     }
   };
 
   const handleShipItem = async () => {
     await shipItem();
-    setShipItemClicked(true);
+    // setShipItemClicked(true);
 
   };
 
   const handleConfirmReceived = async () => {
     await confirmReceived();
-    setShipItemClicked(true);
+    // setShipItemClicked(true);
 
   };
 
@@ -78,8 +81,7 @@ const ContractPage = () => {
       {state === 0 && (
         <form onSubmit={handlePrePay}>
           <label>
-            Pre-Pay Amount:
-            <input type="number" step="0.01" value={prePayValue} onChange={(e) => setPrePayValue(e.target.value)} />
+            Pre-Pay Amount: {totalPrice}
           </label>
           <button type="submit">Pre-Pay</button>
         </form>
