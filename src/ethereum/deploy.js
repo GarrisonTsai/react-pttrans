@@ -1,7 +1,7 @@
 const { web3 } = require("./web3");
 const compiledContract = require("../contract/ptTrans.json");
 
-const deploy = async (mymessage) => {
+const deploy = async () => {
   try {
     // 建立 Web3 連接
     // const web3 = new Web3(window.ethereum);
