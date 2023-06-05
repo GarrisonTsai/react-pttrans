@@ -11,12 +11,12 @@ const DeployPage = () => {
   const [contractAddress, setContractAddress] = useState('');
   // const [oldAddress, setOldAddress] = useState('');
 
-  const [getParams] = useSearchParams()
-  const buyerID = getParams.getAll('buyerID')
-  const buyerAddress = getParams.getAll('buyerAddress')
-  const storeID = getParams.getAll('storeID')
-  const serverID = getParams.getAll('serverID')
-  const totalPrice = getParams.getAll('totalPrice')
+  const [getParams] = useSearchParams();
+  const buyerID = getParams.getAll('buyerID');
+  const buyerAddress = getParams.getAll('buyerAddress');
+  const storeID = getParams.getAll('storeID');
+  const serverID = getParams.getAll('serverID');
+  const totalPrice = getParams.getAll('totalPrice');
 
   const handleDeploy = async (e) => {
     e.preventDefault(); 
