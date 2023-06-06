@@ -60,11 +60,11 @@ const DeployPage = () => {
         <p>serverID: {serverID[0]}</p>
       </form>
 
-      <p>seller address: {totalPrice}</p>
+      {/* <p>seller address: {totalPrice}</p> */}
 
       {contractAddress && (
         <div>
-          <p>Contract deployed at address: {contractAddress}</p>
+          <p>smartContractAddress: {contractAddress}</p>
           {/* <button onClick={() => navigate(`/contract/${contractAddress}`)}>Go to Contract Page</button> */}
         </div>
       )}
